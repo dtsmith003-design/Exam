@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f9; }
+        .dashboard-card { background-color: blueviolet; padding: 40px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); max-width: 500px; margin: 40px auto; text-align: center; }
+        .badge { display: inline-block; padding: 5px 15px; border-radius: 20px; color: white; font-weight: bold; margin-top: 20px; text-transform: uppercase; }
+
+        /* Role-specific  colors */
+        .admin-theme { border-top: 8px solid #dc3545;}
+        .admin-badge { background-color: #dc3545; }
+
+        .manager-theme { border-top: 8px solid #ffc107; color:#333; }
+        .manager-badge { background-color: #ffc107; color:#333; }
+
+        .employee-theme { border-top: 8px solid #28a745; }
+        .employee-badge { background-color: #28a745; }
+
+        .back-btn { margin-top: 20px; display: inline-block; color: #007bff; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="dashboard-card" id="dashboardcard">
+        <div id="roleBadge" class="badge">Loading...</div>
+        <h1>Welcome Back!</h1>
+        <p>Logged in with ID: <strong id="displayId">-----</strong></p>
+        <p id="roleMessage">Loading your permissions...</p>
+
+        <a href="Part one.html" class="back-btn">Back to Login</a>
+    </div>
+
+    <script>
+        //1 URL Parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('id');
+        const userRole = urlParams.get('role');
+
+        //2 Display the Data
+        if (userId && userRole) {
+            document.getElementById('displayId').textContent = userId;
+
+            //Customize page elements for roles
+            const card = document.getElementById('dashboardcard');
+            const badge = document.getElementById('roleBadge');
+            const message = document.getElementById('roleMessage');
+
+            badge.textContent = userRole;
+
+            if (userRole === 'admin') {
+                card.classList.add('admin-theme');
+                badge.classList.add('admin-badge');
+                message.textContent = "System Access Granted.";
+            } else if (userRole === 'manager') {
+                card.classList.add('manager-theme');
+                badge.classList.add('manager-badge');
+                message.textContent = "You can now approve or reject reports";
+            } else if (userRole === 'employee') {
+                card.classList.add('employee-theme');
+                badge.classList.add('employee-badge');
+                message.textContent = "You can now submit reports and check your status.";
+            } else {
+                //For if someone visits dashborad without permission
+                document.getElementById('dashboardcard').innerHTML = `
+                    <h2>Error</h2>
+                    <p> no user data provided. Please sign in first.</p>
+                    <a href="Part one.html" class="back-btn">Back to Home page</a>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

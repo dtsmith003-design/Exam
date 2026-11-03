@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  h1 Faculty Dashboard
+
+  h2 Welcome, #{facultyName}
+
+  h3 Your Course Offerings
+
+  if offerings && offerings.length > 0
+    table(border="1")
+      thead
+        tr
+          th Course Number
+          th Term
+          th Year
+      tbody
+        each item in (offerings)
+          tr
+            td= item.CourseNo
+            td= item.OffTerm
+            td= item.OffYear
+  else
+    p No course offerings found.
+
+  p
+    a(href="/") Back to Home

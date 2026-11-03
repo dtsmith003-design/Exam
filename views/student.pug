@@ -1,0 +1,55 @@
+extends layout
+
+block content
+  h1 Student Dashboard
+
+  h2 Welcome, #{studentName}
+
+  h3 Your Enrolled Courses
+
+  if enrollments && enrollments.length > 0
+    table(border="1")
+      thead
+        tr
+          th Course Number
+          th Term
+          th Year
+          th Instructor
+          th Grade
+      tbody
+        each item in enrollments
+          tr
+            td= item.CourseNo
+            td= item.OffTerm
+            td= item.OffYear
+            td= item.Instructor
+            td= item.EnrGrade
+  else
+    p No enrolled courses found.
+
+  h3 Winter 2026 Course Offerings
+
+  if offerings && offerings.length > 0
+    table(border="1")
+      thead
+        tr
+          th Course Number
+          th Instructor
+          th Location
+          th Time
+          th Days
+          th Enrolled
+      tbody
+        each item in (offerings)
+          tr
+            td= item.CourseNo
+            td= item.Instructor
+            td= item.OffLocation
+            td= item.OffTime
+            td= item.OffDays
+            td= item.Enrolled
+  else
+    p No course offerings found.
+
+  p
+    a(href="/") Back to Home

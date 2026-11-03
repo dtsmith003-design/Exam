@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  h1 Registrar Dashboard
+
+  h2 Winter 2026 Course Offerings
+
+  if offerings && offerings.length > 0
+    table(border="1")
+      thead
+        tr
+          th Offering Number
+          th Course Number
+          th Instructor
+          th Location
+          th Time
+          th Days
+      tbody
+        each item in (offerings)
+          tr
+            td= item.OfferNo
+            td= item.CourseNo
+            td= item.Instructor
+            td= item.OffLocation
+            td= item.OffTime
+            td= item.OffDays
+  else
+    p No course offerings found.
+
+  p
+    a(href="/") Back to Home

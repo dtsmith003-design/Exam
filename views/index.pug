@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  h1 University Portal
+  h2 Welcome!
+
+  p Enter your ID and select your role to continue.
+
+  form(action="/" method="get")
+    label(for="ID") Enter your ID:
+    input(type="text" name="ID" id="ID")
+
+    p Select your role:
+
+    label
+      input(type="radio" name="role" value="Student" required)
+      | Student
+
+    label
+      input(type="radio" name="role" value="Faculty")
+      | Faculty
+
+    label
+      input(type="radio" name="role" value="Registrar")
+      | Registrar
+
+    br
+    br
+    button(type="submit") Continue

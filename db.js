@@ -3,7 +3,7 @@ const path = require('path');
 
 const db = new sqlite3.Database(
     path.join(__dirname, 'univdb.sqli'),
-    sqlite3.OPEN_READONLY,
+    sqlite3.OPEN_READWRITE,
     (err) => {
         if (err) {
             console.error('Database connection error:', err.message);

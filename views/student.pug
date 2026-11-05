@@ -39,6 +39,7 @@ block content
           th Time
           th Days
           th Enrolled
+          th Action
       tbody
         each item in (offerings)
           tr
@@ -48,6 +49,17 @@ block content
             td= item.OffTime
             td= item.OffDays
             td= item.Enrolled
+            td
+              if item.Enrolled === 'Yes'
+                form(action="/student/drop" method="post")
+                  input(type="hidden" name="ID" value=studentID)
+                  input(type="hidden" name="OfferNo" value=item.OfferNo)
+                  button(type="submit") Drop
+              else
+                form(action="/student/add" method="post")
+                  input(type="hidden" name="ID" value=studentID)
+                  input(type="hidden" name="OfferNo" value=item.OfferNo)
+                  button(type="submit") Add
   else
     p No course offerings found.
 

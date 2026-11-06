@@ -103,11 +103,12 @@ router.post('/add', (req, res) => {
         if (!student) {
             return res.status(404).send('Student not found');
         }
-
         const checkOfferingSQL = `
             SELECT OfferNo
             FROM Offering
             WHERE OfferNo = ?
+            AND OffTerm = 'WINTER'
+            AND OffYear = 2026
         `;
 
         db.get(checkOfferingSQL, [offerNo], (err, offering) => {

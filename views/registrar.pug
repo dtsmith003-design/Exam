@@ -15,6 +15,7 @@ block content
           th Location
           th Time
           th Days
+          th Action
       tbody
         each item in (offerings)
           tr
@@ -24,8 +25,49 @@ block content
             td= item.OffLocation
             td= item.OffTime
             td= item.OffDays
+            td
+              a(href=`/registrar/edit?OfferNo=${encodeURIComponent(item.OfferNo)}`) Edit
+              form(action="/registrar/cancel" method="POST" onsubmit="return confirm('Are you sure you want to cancel this offering? All enrollments in this offering will also be removed.')")
+                input(type="hidden" name="OfferNo" value=item.OfferNo)
+                button(type="submit") Cancel
+
   else
     p No course offerings found.
 
+  h2 Add New Offering
+
+  form(action="/registrar/add" method="POST")
+    p
+      label(for="offerNo") Offering Number (required):
+      input#offerNo(type="number" name="OfferNo" min="1" step="1" required)
+
+    p
+      label(for="courseNo") Course (required):
+      select#courseNo(name="CourseNo" required)
+        option(value="" disabled selected) Select a course
+        each course in (courses)
+          option(value=course.CourseNo)= course.CourseNo + ' - ' + course.CrsDesc + ' (' + course.CrsUnits + ' credits)'
+
+    p
+      label(for="facultyID") Instructor (optional):
+      select#facultyID(name="FacSSN")
+        option(value="") No instructor assigned
+        each instructor in (faculty)
+          option(value=instructor.FacSSN)= instructor.FacFirstName + ' ' + instructor.FacLastName
+
+    p
+      label(for="location") Location (required):
+      input#location(type="text" name="OffLocation" maxlength="50" required)
+
+    p
+      label(for="time") Time (required):
+      input#time(type="text" name="OffTime" maxlength="50" placeholder="e.g. 10:30 AM" required)
+
+    p
+      label(for="days") Days (required):
+      input#days(type="text" name="OffDays" maxlength="20" placeholder="e.g. MW or TTH" required)
+
+    p
+      button(type="submit") Add Offering
   p
-    a(href="/") Back to Home
+      a(href="/") Back to Home

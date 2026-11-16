@@ -1,0 +1,57 @@
+extends layout
+
+block content
+  h1 Edit Offering
+
+  h2 #{offering.CourseNo} - WINTER 2026
+
+  p Offering Number: #{offering.OfferNo}
+
+  form(action="/registrar/edit" method="POST")
+    input(type="hidden" name="OfferNo" value=offering.OfferNo)
+
+    p
+      label(for="facultyID") Instructor:
+      select#facultyID(name="FacSSN")
+        option(value="" selected=!offering.FacSSN) No instructor assigned
+        each instructor in (faculty)
+          option(
+            value=instructor.FacSSN
+            selected=(offering.FacSSN === instructor.FacSSN)
+          )= instructor.FacFirstName + ' ' + instructor.FacLastName
+
+    p
+      label(for="location") Location (required):
+      input#location(
+        type="text"
+        name="OffLocation"
+        value=offering.OffLocation
+        maxlength="50"
+        required
+      )
+
+    p
+      label(for="time") Time (required):
+      input#time(
+        type="text"
+        name="OffTime"
+        value=offering.OffTime
+        maxlength="50"
+        required
+      )
+
+    p
+      label(for="days") Days (required):
+      input#days(
+        type="text"
+        name="OffDays"
+        value=offering.OffDays
+        maxlength="20"
+        required
+      )
+
+    p
+      button(type="submit") Save Changes
+
+  p
+    a(href="/registrar") Back to Registrar Dashboard

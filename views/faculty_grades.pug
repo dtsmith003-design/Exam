@@ -1,0 +1,36 @@
+extends layout
+
+block content
+  h1 Edit Grades
+
+  h2 #{offering.CourseNo} - #{offering.OffTerm} #{offering.OffYear}
+
+  p Offering Number: #{offering.OfferNo}
+
+  if students && students.length > 0
+    table(border="1")
+      thead
+        tr
+          th Student Name
+          th Student ID
+          th Current Grade
+          th New Grade
+          th Action
+      tbody
+        each student in students
+          tr
+            td= student.StdFirstName + ' ' + student.StdLastName
+            td= student.StdSSN
+            td= student.EnrGrade || 'Not graded'
+            td
+              form(action="/faculty/grades/update" method="POST")
+                input(type="hidden" name="ID" value=facultyID)
+                input(type="hidden" name="OfferNo" value=offering.OfferNo)
+                input(type="hidden" name="StdSSN" value=student.StdSSN)
+                input(type="number" name="grade" min="0" max="4" step="0.1" required value=student.EnrGrade)
+                button(type="submit") Save Grade
+  else
+    p No students enrolled in this offering.
+
+  p
+    a(href=`/faculty?ID=${encodeURIComponent(facultyID)}`) Back to Faculty Dashboard

@@ -14,12 +14,15 @@ block content
           th Course Number
           th Term
           th Year
+          th Action
       tbody
         each item in (offerings)
           tr
             td= item.CourseNo
             td= item.OffTerm
             td= item.OffYear
+            td
+              a(href=`/faculty/grades?ID=${encodeURIComponent(facultyID)}&OfferNo=${encodeURIComponent(item.OfferNo)}`) Edit Grades
   else
     p No course offerings found.
 
